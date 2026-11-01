@@ -1,0 +1,9 @@
+ACE plugin bundle — independent research prototype
+
+This plugin is not affiliated with, sponsored by, or endorsed by DeepSeek.
+DeepSeek Harness (DSH) is a separate product under its own license. This
+bundle does not include DSH source code. It targets DSH host services that may
+change between versions.
+
+The bundled icon.svg is an original project asset released under the project's
+MIT license. See ../LICENSE and ../NOTICE for the project-level notice.

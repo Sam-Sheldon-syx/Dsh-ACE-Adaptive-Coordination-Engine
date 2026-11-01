@@ -1,0 +1,19 @@
+{
+  "name": "ace",
+  "version": "0.11.0-p10",
+  "private": true,
+  "type": "module",
+  "description": "ACE — experimental dynamic multi-agent coordination plugin for DeepSeek Harness (Host-only bundle).",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.21.0"
+  },
+  "scripts": {
+    "test": "node --test \"test/core/*.test.js\" \"test/adapter/*.test.js\" \"test/p7/*.test.js\" \"test/faults/*.test.js\"",
+    "test:p8": "node scripts/test-all.mjs",
+    "check:syntax": "node scripts/check-syntax.mjs",
+    "check:package": "node scripts/check-package.mjs",
+    "check:secrets": "node scripts/scan-secrets.mjs",
+    "check": "npm run check:syntax && npm test && npm run check:package && npm run check:secrets"
+  }
+}

@@ -1,0 +1,7 @@
+# ACE Host-only bundle patch.
+# The row id is stable; the profile/user patch layer may override its config.
+- insert:
+    - id: ace-plugin
+      name: ace-plugin
+      config:
+        probeFile: ''

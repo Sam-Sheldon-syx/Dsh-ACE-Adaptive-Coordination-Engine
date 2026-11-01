@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "ACE 自适应协调引擎",
+    "description": "面向 DeepSeek Harness 的自适应协调实验原型；只读分析与状态工具，非生产版本。"
+  }
+}

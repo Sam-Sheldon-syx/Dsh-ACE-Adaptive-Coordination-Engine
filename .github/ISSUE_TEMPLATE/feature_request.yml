@@ -1,0 +1,26 @@
+name: Feature request
+description: Suggest a focused improvement
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What limitation or use case should be addressed?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Keep the core/adapter boundary and experimental limits in mind.
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Validation idea
+      description: What test or synthetic scenario would demonstrate the change?
+    validations:
+      required: false

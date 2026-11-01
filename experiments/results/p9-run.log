@@ -1,0 +1,109 @@
+{
+  "scenarios": 84,
+  "faultScenarios": 72,
+  "baselines": {
+    "b0-noop": {
+      "scenarios": 84,
+      "truePositives": 0,
+      "falsePositiveScenarios": 0,
+      "recall": 0,
+      "precision": 0,
+      "f1": 0,
+      "recallBootstrap": {
+        "mean": 0,
+        "ci95": [
+          0,
+          0
+        ]
+      },
+      "decisionAgreement": 0.14285714285714285,
+      "decisionAgreementBootstrap": {
+        "mean": 0.1429,
+        "ci95": [
+          0.0714,
+          0.2262
+        ]
+      },
+      "candidateRate": 0,
+      "runtime": {
+        "samples": 84,
+        "medianMs": 0,
+        "p95Ms": 0,
+        "minMs": 0,
+        "maxMs": 0
+      }
+    },
+    "b1-hardrule": {
+      "scenarios": 84,
+      "truePositives": 48,
+      "falsePositiveScenarios": 0,
+      "recall": 0.6666666666666666,
+      "precision": 1,
+      "f1": 0.8,
+      "recallBootstrap": {
+        "mean": 0.6667,
+        "ci95": [
+          0.5556,
+          0.7639
+        ]
+      },
+      "decisionAgreement": 0.14285714285714285,
+      "decisionAgreementBootstrap": {
+        "mean": 0.1429,
+        "ci95": [
+          0.0714,
+          0.2262
+        ]
+      },
+      "candidateRate": 0,
+      "runtime": {
+        "samples": 84,
+        "medianMs": 0,
+        "p95Ms": 0,
+        "minMs": 0,
+        "maxMs": 0
+      }
+    },
+    "ace": {
+      "scenarios": 84,
+      "truePositives": 72,
+      "falsePositiveScenarios": 0,
+      "recall": 1,
+      "precision": 1,
+      "f1": 1,
+      "recallBootstrap": {
+        "mean": 1,
+        "ci95": [
+          1,
+          1
+        ]
+      },
+      "decisionAgreement": 1,
+      "decisionAgreementBootstrap": {
+        "mean": 1,
+        "ci95": [
+          1,
+          1
+        ]
+      },
+      "candidateRate": 1,
+      "runtime": {
+        "samples": 252,
+        "medianMs": 0.3061,
+        "p95Ms": 0.6498,
+        "minMs": 0.0667,
+        "maxMs": 7.1601
+      }
+    }
+  },
+  "hardTypeRecall": {
+    "b0": 0,
+    "b1": 1,
+    "ace": 1
+  },
+  "softTypeRecall": {
+    "b0": 0,
+    "b1": 0,
+    "ace": 1
+  }
+}

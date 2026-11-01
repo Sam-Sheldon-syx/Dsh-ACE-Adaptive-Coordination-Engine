@@ -1,0 +1,14 @@
+# Example overlay for an isolated DSH test profile.
+# Replace placeholders; never use the desktop profile for experiments.
+- id: ace-plugin
+  config:
+    probeFile: '<WORKSPACE>/logs/ace-probe.jsonl'
+    selfTest: false
+    registerTools: true
+    sessionId: '<SESSION_ID>'
+    coreDir: '<WORKSPACE>/core'
+    evidenceFile: '<WORKSPACE>/logs/ace-evidence.json'
+    stateDir: '<WORKSPACE>/logs/ace-state'
+    analysisConfig:
+      shadowMode: replay
+      autoApply: false

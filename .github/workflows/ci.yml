@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+      - name: Tests
+        run: npm test
+      - name: JavaScript syntax
+        run: npm run check:syntax
+      - name: Public package boundary
+        run: npm run check:package
+      - name: Secret/PII scan
+        run: npm run check:secrets

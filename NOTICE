@@ -1,0 +1,10 @@
+ACE — Adaptive Coordination Engine
+
+This is an independent research project. It is not affiliated with, sponsored
+by, or endorsed by DeepSeek. DeepSeek Harness (DSH) is a separate product
+distributed under its own license; this repository does not include DSH source
+code. The plugin targets DSH host services and bundle mechanisms that may change
+between DSH versions.
+
+ACE is experimental and is not production-ready. See README.md and
+docs/ for verified scope and limitations.
