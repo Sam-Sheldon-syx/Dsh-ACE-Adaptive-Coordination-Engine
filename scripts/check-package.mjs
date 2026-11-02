@@ -68,7 +68,7 @@ if (rootPkg.dependencies && Object.keys(rootPkg.dependencies).length > 0) errors
 if (rootPkg.private !== true) errors.push('package.json should remain private (not published to npm in P12)')
 const pluginPkg = JSON.parse(readFileSync(join(root, 'ace-plugin/package.json'), 'utf8'))
 if (pluginPkg.license !== 'MIT') errors.push('ace-plugin/package.json license must be MIT')
-if (pluginPkg.private !== true) errors.push('ace-plugin/package.json should remain private')
+if (pluginPkg.private !== false) errors.push('ace-plugin/package.json must be publishable (private:false)')
 
 const textFiles = files.filter((rel) => ['.md', '.js', '.mjs', '.json', '.jsonl', '.csv', '.log', '.yml', '.yaml', '.txt', '.svg', ''].includes(extname(rel)))
 for (const rel of textFiles) {
