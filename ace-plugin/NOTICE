@@ -5,5 +5,10 @@ DeepSeek Harness (DSH) is a separate product under its own license. This
 bundle does not include DSH source code. It targets DSH host services that may
 change between versions.
 
-The bundled icon.svg is an original project asset released under the project's
-MIT license. See ../LICENSE and ../NOTICE for the project-level notice.
+The bundled `icon.svg` was generated with an AI tool and is distributed under
+the project's MIT license. It contains only generic geometric shapes and the
+label "ACE"; no third-party logo, icon, font or image is intentionally
+included. External similarity or trademark clearance was not performed. The
+project makes no claim of absolute originality, exclusivity or registrability;
+AI-generated output may not be protectable as copyright in every jurisdiction.
+See ../LICENSE and ../NOTICE for the project-level notice.

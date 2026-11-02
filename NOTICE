@@ -8,3 +8,13 @@ between DSH versions.
 
 ACE is experimental and is not production-ready. See README.md and
 docs/ for verified scope and limitations.
+
+## Asset notice
+
+`ace-plugin/icon.svg` was generated with an AI tool. It is distributed under
+the project's MIT license as part of this repository. It contains only generic
+geometric shapes and the label "ACE"; no third-party logo, icon, font or image
+is intentionally included. External similarity or trademark clearance was not
+performed. The project makes no claim of absolute originality, exclusivity or
+registrability for the icon; AI-generated output may not be protectable as
+copyright in every jurisdiction.
