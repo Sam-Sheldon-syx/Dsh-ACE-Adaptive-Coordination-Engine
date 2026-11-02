@@ -15,5 +15,10 @@
     "check:package": "node scripts/check-package.mjs",
     "check:secrets": "node scripts/scan-secrets.mjs",
     "check": "npm run check:syntax && npm test && npm run check:package && npm run check:secrets"
+  },
+  "author": "Sam-Sheldon-syx",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine.git"
   }
 }

@@ -169,6 +169,6 @@ npm run check         # 以上全部
 
 ## 14. 许可证
 
-[MIT](LICENSE)。版权归 ACE contributors；如发布前需要改为个人/组织名义，请在发布前由维护者确认。
+[MIT](LICENSE)。Copyright (c) 2026 Sam-Sheldon-syx。
 
 > 本仓库的根 `package.json` 使用 `private: true`：这是**源码分发**项目，不发布到 npm。

@@ -64,4 +64,4 @@ method above is the one used in the project's isolated-profile checks.
 
 ## License
 
-[MIT](LICENSE) © 2026 ACE contributors.
+[MIT](LICENSE) © 2026 Sam-Sheldon-syx.
