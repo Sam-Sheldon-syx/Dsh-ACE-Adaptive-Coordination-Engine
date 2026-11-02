@@ -3,6 +3,15 @@
 All notable changes to this public research release are documented here.
 The project is experimental; version numbers are pre-release identifiers.
 
+## Publication metadata remediation — 2026-11-02
+
+- Aligned README copyright notices with the MIT LICENSE (`Sam-Sheldon-syx`).
+- Added author/repository metadata to both package manifests.
+- Documented the AI-generated provenance of `ace-plugin/icon.svg`; no
+  third-party logo/asset is included and external similarity was not checked.
+- Added bundle-level LICENSE/NOTICE and corrected the public repository URL in
+  the installation guide.
+
 ## Public release preparation — 2026-11-01
 
 - Added a sanitized GitHub release tree: core, plugin, tests, synthetic replay data,

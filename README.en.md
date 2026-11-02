@@ -17,7 +17,7 @@ It does not write the formal DSH task state during shadow analysis.
 - Core algorithms, DSH adapter and read-only `ace_status` tool are implemented.
 - **90/90 tests pass** with `node:test`; no runtime dependencies.
 - Real DSH task-state apply/rollback and Mode L live shadow are **not implemented**.
-- The semi-synthetic replay experiment is and does **not** demonstrate real-task quality
+- The semi-synthetic replay experiment **does not** demonstrate real-task quality
   or performance improvements.
 - Tested only on Windows with DSH 0.2.1-rc.2 and Node.js 24.21.0/24.22.1.
 

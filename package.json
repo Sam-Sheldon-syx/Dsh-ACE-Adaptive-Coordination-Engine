@@ -20,5 +20,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine.git"
+  },
+  "homepage": "https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine",
+  "bugs": {
+    "url": "https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine/issues"
   }
 }
