@@ -6,7 +6,7 @@
  */
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { dirname } from 'node:path'
-import { readDshSession, mapDshEvents, getService } from './trace.js'
+import { readDshSession, mapDshEvents, getService, resolveSessionId, capabilities } from './trace.js'
 
 function lastSeq(events) {
   let max = -1
@@ -14,38 +14,6 @@ function lastSeq(events) {
     if (Number.isInteger(event.seq) && event.seq > max) max = event.seq
   }
   return max
-}
-
-function capabilities(ctx) {
-  const get = (name) => {
-    try {
-      if (typeof ctx?.get === 'function') {
-        const value = ctx.get(name)
-        if (value !== undefined) return value
-      }
-    } catch {
-      // fall through
-    }
-    try {
-      return ctx?.[name]
-    } catch {
-      return undefined
-    }
-  }
-  const agents = get('agents')
-  const subagents = get('subagents')
-  return {
-    sessions: typeof get('sessions')?.get === 'function',
-    sessionQuery: typeof get('sessionQuery')?.readSession === 'function',
-    agents: !!agents,
-    agentsCreate: typeof agents?.create === 'function',
-    subagents: !!subagents,
-    subagentsStart: typeof subagents?.startActivation === 'function',
-    tokenMeter: typeof get('tokenMeter')?.measure === 'function',
-    sessionProjections: !!get('sessionProjections'),
-    sessionPersistence: typeof get('sessionPersistence')?.open === 'function',
-    agentsList: typeof get('agents')?.list === 'function',
-  }
 }
 
 function summarizeAnalysis(analysis) {
@@ -166,7 +134,7 @@ export async function runSelfTest(input) {
     plugin: 'ace-plugin',
     stage: config.stage ?? 'public',
     at: new Date().toISOString(),
-    sessionId: config.sessionId ?? process.env.DSH_SESSION_ID ?? null,
+    sessionId: await resolveSessionId(ctx, config),
     traceSource: null,
     capabilities: capabilities(ctx),
     trace: null,
@@ -178,7 +146,7 @@ export async function runSelfTest(input) {
   }
 
   try {
-    if (!evidence.sessionId) throw new Error('sessionId is required')
+    if (!evidence.sessionId) throw new Error('no live DSH session could be resolved; set sessionId')
     const persistence = getService(ctx, 'sessionPersistence')
     const before = await readDshSession(ctx, evidence.sessionId)
     evidence.traceSource = before.source
@@ -190,7 +158,13 @@ export async function runSelfTest(input) {
       const agentService = getService(ctx, 'agents')
       if (agentService && typeof agentService.list === 'function') {
         const live = await agentService.list()
-        liveAgentIds = (live ?? []).map((item) => item?.id ?? item?.agent?.id).filter(Boolean)
+        liveAgentIds = (live ?? [])
+          // Only this session's Agents may enter this session's topology: the
+          // Host also runs other sessions' Agents, and admitting them exceeds
+          // the topology's maxAgents budget.
+          .filter((item) => item?.session?.id === evidence.sessionId)
+          .map((item) => item?.id ?? item?.agent?.id)
+          .filter(Boolean)
       }
     } catch {
       liveAgentIds = []

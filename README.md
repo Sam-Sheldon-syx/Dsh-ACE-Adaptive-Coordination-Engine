@@ -34,7 +34,7 @@ ACE 把多智能体执行过程看作可观测、可评估、可安全变更的�
 | 风险门禁 | 影响区、Agent 增量、预算、证据置信度；fail-closed |
 | 事务 | ChangeSet 前置 version/hash 校验、验证、补偿、`ROLLBACK_FAILED` |
 | DSH 适配 | `sessionPersistence` 读取、只读 `ace_status` 工具 |
-| 测试/实验 | 90 项测试；84 个半合成回放场景 |
+| 测试/实验 | 98 项测试；84 个半合成回放场景 |
 
 ## 4. 工作流程
 
@@ -69,7 +69,7 @@ experiments/          半合成回放实验
 ## 6. 环境要求
 
 - **Node.js ≥ 24.21.0**（已验证 24.21.0/24.22.1；仅 Windows 验证）
-- **DSH 0.2.1-rc.2**（Windows 桌面版，已验证）
+- **DeepSeek Harness 0.2.1-rc.2 / 0.2.2-rc.1**（Windows 桌面版，已验证）
 - 无第三方 runtime/dev 依赖
 - 未验证 Linux/macOS 或其他 DSH 版本；不要据此宣称跨平台兼容
 
@@ -85,7 +85,7 @@ npm run check
 
 ### 7.2 安装到隔离的 DSH profile
 
-> 本项目只在**隔离测试 profile** 中验证；不要直接安装到日常使用的 `desktop` profile。DSH 安装路径用 `<DSH_HOME>` 表示。
+> 首次试用建议使用**隔离测试 profile**。`desktop` 是日常 profile，装入后会影响该 profile 的所有会话；已验证可行，但请先读第 7.3 节的回滚方法。DSH 安装路径用 `<DSH_HOME>` 表示。
 
 1. 复制插件目录：
    ```text
@@ -100,7 +100,18 @@ npm run check
    `dsh.cmd` 通常不在 PATH；真正加载插件需按 DSH 正常启动（web/CLI），不是 `--help`。
 5. 检查 probe/evidence 文件。验证后删除测试 profile。
 
-`plugin_manager` 的 `install_bundle` 路径未在本项目中验证；以上复制方式是本项目隔离 profile 验证实际使用的路径。详细步骤见 [docs/INSTALLATION.md](docs/INSTALLATION.md)。
+### 7.3 用 `plugin_manager` 安装（已在 live profile 验证）
+
+上面的复制方式适用于隔离 profile。若要在 live profile 安装，使用官方工具（已实测通过）：
+
+1. `npm pack` 生成 tarball（或直接用仓库目录）。
+2. `plugin_manager` → `install_bundle`，`target` 传 tarball 的**绝对路径**。
+3. 在该 profile 的 `cordis.patch.yml` 追加配置段（见第 8 节）。
+4. 确认组合行为 `active`，`ace_status` 出现在会话工具表。
+
+回滚：`plugin_manager` → `remove_bundle`（`target` 传 `ace-plugin`），再从 `cordis.patch.yml` 删除对应 `- id: ace-plugin` 段。
+
+详细步骤见 [docs/INSTALLATION.md](docs/INSTALLATION.md)。
 
 ## 8. 配置
 
@@ -111,7 +122,7 @@ npm run check
 | `probeFile` | `''` | 加载/自检事件 JSONL 路径 |
 | `selfTest` | `false` | 启动时只读 session 分析 + 沙箱回滚 |
 | `registerTools` | `false` | 注册只读 `ace_status` |
-| `sessionId` | 环境变量 | 目标 session |
+| `sessionId` | 自动解析 | 目标 session：显式 → 配置 → 环境变量 → 最新 live Agent 的 session |
 | `coreDir` | — | `core/` 绝对路径（动态 import） |
 | `evidenceFile` | — | 自检证据 JSON |
 | `stateDir` | — | ACE 运行记录目录 |
@@ -128,19 +139,21 @@ ace_status()
 ace_status({ sessionId: "<SESSION_ID>" })
 ```
 
+不传 `sessionId` 时，工具优先分析**调用方所在的 live session**；只有在没有调用方会话时才回退到已记录的 evidence，且仅当该 evidence 含实际分析结果（失败的记录不会被当作状态展示）。
+
 输出包含能力、轨迹、异常、影响区、候选、决策/风险、评分/影子、回滚、会话一致性。详见 [docs/USAGE.md](docs/USAGE.md)。
 
 ## 10. 测试
 
 ```bash
-npm test              # 90 项：core 47 + adapter 9 + status/tool 5 + faults 29
+npm test              # 98 项：core 47 + adapter 17 + status/tool 5 + faults 29
 npm run check:syntax  # node --check
 npm run check:package # 公开包边界
 npm run check:secrets # 基础敏感信息/PII 扫描
 npm run check         # 以上全部
 ```
 
-测试只使用合成 fixtures；不依赖真实 session。当前结果：**90/90 通过**。
+测试只使用合成 fixtures；不依赖真实 session。当前结果：**98/98 通过**。
 
 ## 11. 当前限制
 
@@ -150,7 +163,7 @@ npm run check         # 以上全部
 - 任务模型由 adapter 按 `(turn, step)` 合成，不是 DSH 正式任务图。
 - `latencyMs=0` 等指标口径不完整；参数未标定。
 - 半合成回放实验；1.0 指标**不可外推**真实任务质量/性能。
-- 无 CI 历史、无覆盖率、无多写者锁；仅在 Windows/DSH 0.2.1-rc.2 验证。
+- 无 CI 历史、无覆盖率、无多写者锁；仅在 Windows/DSH 0.2.1-rc.2 与 0.2.2-rc.1 验证。
 
 ## 12. 后续计划
 

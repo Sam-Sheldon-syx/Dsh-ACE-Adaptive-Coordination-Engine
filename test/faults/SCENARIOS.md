@@ -1,7 +1,7 @@
 # ACE Fault-Injection Scenarios
 
 > 每个场景对应一个测试用例；期望行为是**断言**，不是描述性说明。
-> 运行：`npm run test:p8`（core + adapter + status/tool + faults，共 90 项）。
+> 运行：`npm run test:p8`（core + adapter + status/tool + faults，共 98 项）。
 > 说明：该故障注入套件是**合成输入**，不修改真实 DSH session；真实状态故障留待后续安全沙箱。
 
 | ID | 故障 | 注入方式 | 期望行为 | 测试 |

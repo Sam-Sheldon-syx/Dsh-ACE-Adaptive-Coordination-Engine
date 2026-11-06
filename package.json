@@ -1,6 +1,6 @@
 {
   "name": "ace",
-  "version": "0.11.0-p10",
+  "version": "0.11.1-p10",
   "private": true,
   "type": "module",
   "description": "ACE — experimental dynamic multi-agent coordination plugin for DeepSeek Harness (Host-only bundle).",

@@ -35,6 +35,84 @@ export function getService(ctx, name) {
   }
 }
 
+/** Which DSH Host services the adapter found, as reported in a status snapshot. */
+export function capabilities(ctx) {
+  const get = (name) => {
+    try {
+      if (typeof ctx?.get === 'function') {
+        const value = ctx.get(name)
+        if (value !== undefined) return value
+      }
+    } catch {
+      // fall through to property access
+    }
+    try {
+      return ctx?.[name]
+    } catch {
+      return undefined
+    }
+  }
+  const agents = get('agents')
+  const subagents = get('subagents')
+  return {
+    sessions: typeof get('sessions')?.get === 'function',
+    sessionQuery: typeof get('sessionQuery')?.readSession === 'function',
+    agents: !!agents,
+    agentsCreate: typeof agents?.create === 'function',
+    subagents: !!subagents,
+    subagentsStart: typeof subagents?.startActivation === 'function',
+    tokenMeter: typeof get('tokenMeter')?.measure === 'function',
+    sessionProjections: !!get('sessionProjections'),
+    sessionPersistence: typeof get('sessionPersistence')?.open === 'function',
+    agentsList: typeof agents?.list === 'function',
+  }
+}
+
+/**
+ * Resolve the session ACE should inspect. The Host process has no
+ * DSH_SESSION_ID (that variable belongs to an agent's shell), so an explicit
+ * value, then config, then the newest live Agent/Session is used.
+ * @param {object} ctx Cordis context.
+ * @param {{sessionId?: string}} [config] Plugin config.
+ * @param {string} [explicit] Caller-provided session id.
+ * @returns {Promise<string|null>} the session id, or null when none is live.
+ */
+export async function resolveSessionId(ctx, config = {}, explicit) {
+  if (typeof explicit === 'string' && explicit) return explicit
+  if (typeof config?.sessionId === 'string' && config.sessionId) return config.sessionId
+  if (process.env.DSH_SESSION_ID) return process.env.DSH_SESSION_ID
+
+  try {
+    const agents = getService(ctx, 'agents')
+    if (agents && typeof agents.list === 'function') {
+      const live = await agents.list()
+      if (Array.isArray(live)) {
+        for (let index = live.length - 1; index >= 0; index -= 1) {
+          const id = live[index]?.session?.id
+          if (typeof id === 'string' && id) return id
+        }
+      }
+    }
+  } catch {
+    // fall through to the session registry
+  }
+
+  try {
+    const sessions = getService(ctx, 'sessions')
+    if (sessions && typeof sessions.list === 'function') {
+      const live = await sessions.list()
+      for (let index = live.length - 1; index >= 0; index -= 1) {
+        const id = live[index]?.id
+        if (typeof id === 'string' && id) return id
+      }
+    }
+  } catch {
+    // no session source answered
+  }
+
+  return null
+}
+
 export async function readDshSession(ctx, sessionId) {
   const query = getService(ctx, 'sessionQuery')
   if (query && typeof query.readSession === 'function') {
@@ -253,7 +331,9 @@ export function mapDshEvents(events, options = {}) {
     dependencies,
     coordination,
     assignments: tasks.map((task) => ({ taskId: task.id, agentId: 'lead' })),
-    policy: { maxAgents: 8, maxParallel: 4 },
+    // The observed topology is the budget floor: a candidate is judged against
+    // the agents this session already has, never against fewer.
+    policy: { maxAgents: Math.max(8, agents.length), maxParallel: 4 },
     taskModel: 'steps',
   }
 

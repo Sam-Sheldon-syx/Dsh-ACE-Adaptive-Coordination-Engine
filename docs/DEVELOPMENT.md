@@ -9,7 +9,7 @@
 ## Commands
 
 ```bash
-npm test              # 90 tests
+npm test              # 98 tests
 npm run test:p8       # same suites via scripts/test-all.mjs; summary written to the OS temp dir
 npm run check:syntax  # node --check on core/plugin/scripts/test/experiments
 npm run check:package # public boundary: required files, forbidden paths, metadata

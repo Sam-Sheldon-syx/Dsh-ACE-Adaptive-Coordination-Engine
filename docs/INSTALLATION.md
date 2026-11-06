@@ -4,7 +4,7 @@
 
 - Windows 10/11 (the only tested OS)
 - Node.js **>= 24.21.0** for tests and tooling
-- DeepSeek Harness **0.2.1-rc.2** (Windows desktop; other versions untested)
+- DeepSeek Harness **0.2.1-rc.2 / 0.2.2-rc.1** (Windows desktop; other versions untested)
 - No npm runtime dependencies
 
 > Do not install this plugin into your daily `desktop` profile for experiments.
@@ -26,7 +26,7 @@ npm test
 npm run check
 ```
 
-Expected: 90 tests pass, syntax/package/secret checks pass.
+Expected: 98 tests pass, syntax/package/secret checks pass.
 
 ## 3. Create an isolated DSH profile
 
@@ -64,6 +64,31 @@ Copy the repository's `ace-plugin/` directory to:
 `core/` via `coreDir` at runtime; keep the repository path available or point
 `coreDir` to it.
 
+## 4b. Alternative: install with `plugin_manager` (live profile, verified)
+
+Sections 3–4 describe an isolated profile. To install into a profile that is
+already running (including `desktop`), use DSH's own tool instead of copying:
+
+1. Pack the bundle: `npm pack` inside `ace-plugin/` (or pass the directory path).
+2. Ask the running agent/tool surface to call `plugin_manager` with
+   `action: install_bundle` and `target` set to the **absolute** tarball path.
+3. Append the config entry from section 5 to the profile's own
+   `cordis.patch.yml` (the user patch layer), not to the bundle.
+4. Confirm the composed row is `active` and that `ace_status` is offered.
+
+This path was verified on DSH 0.2.2-rc.1 / Windows against a live `desktop`
+profile. Because a live profile is shared, the plugin then applies to every
+session in that profile.
+
+Rollback:
+
+```text
+plugin_manager action=remove_bundle target=ace-plugin
+```
+
+and remove the `- id: ace-plugin` entry from the profile's `cordis.patch.yml`.
+Keep a copy of both profile files before installing.
+
 ## 5. Add config overlay
 
 Create a patch file based on [examples/ace.patch.example.yml](../examples/ace.patch.example.yml):
@@ -74,7 +99,7 @@ Create a patch file based on [examples/ace.patch.example.yml](../examples/ace.pa
     probeFile: '<WORKSPACE>/logs/ace-probe.jsonl'
     selfTest: true
     registerTools: true
-    sessionId: '<SESSION_ID>'
+    # sessionId: '<SESSION_ID>'  # optional; resolved automatically when unset
     coreDir: '<WORKSPACE>/core'
     evidenceFile: '<WORKSPACE>/logs/ace-evidence.json'
     stateDir: '<WORKSPACE>/logs/ace-state'

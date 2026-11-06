@@ -1,6 +1,6 @@
 {
   "name": "ace-plugin",
-  "version": "0.3.0-p7",
+  "version": "0.3.3-p7",
   "private": false,
   "type": "module",
   "description": "ACE Host-only bundle for DeepSeek Harness: runtime adapter, read-only ace_status tool and status rendering.",

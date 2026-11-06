@@ -9,9 +9,11 @@ ace_status()
 ace_status({ sessionId: "<SESSION_ID>" })
 ```
 
-Without `sessionId`, the tool uses the configured session/evidence and returns
-the latest evidence when available; otherwise it reads the session through DSH
-services and runs a read-only analysis.
+Without `sessionId`, the tool analyses the **calling agent's live session**; it
+falls back to the configured session, the environment, and then the newest live
+session. Recorded evidence is used only when no calling session exists **and**
+that evidence contains an actual analysis — a failed self-test record is not
+rendered as current status.
 
 The output includes:
 
@@ -57,4 +59,4 @@ The apply path is exercised only against an in-memory sandbox in tests.
 - Status is a snapshot; re-run or call the tool to refresh.
 - Tokens are summed reported usage, not billing; latency may be unavailable.
 - Real DSH task-state apply/rollback is not implemented.
-- No guarantee of compatibility outside Windows + DSH 0.2.1-rc.2.
+- No guarantee of compatibility outside Windows + DSH 0.2.1-rc.2 / 0.2.2-rc.1.

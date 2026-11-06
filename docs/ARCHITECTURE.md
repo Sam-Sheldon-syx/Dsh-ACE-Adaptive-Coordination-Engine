@@ -69,4 +69,4 @@ compensation fails it returns `ROLLBACK_FAILED`; it does not report success.
 - No session-event writes.
 - No real task-state apply/rollback in the public prototype.
 - No claim that the core's placeholder parameters are calibrated.
-- Only Windows + DSH 0.2.1-rc.2 is tested.
+- Only Windows + DSH 0.2.1-rc.2 / 0.2.2-rc.1 is tested.

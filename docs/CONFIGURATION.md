@@ -10,7 +10,7 @@ document uses placeholders only.
 | `createAgentProbe` | boolean | `false` | Test-only agent factory probe |
 | `selfTest` | boolean | `false` | Read one session, run core analysis, sandbox rollback, write evidence |
 | `registerTools` | boolean | `false` | Register the read-only `ace_status` tool |
-| `sessionId` | string | env `DSH_SESSION_ID` | Session used by self-test/status |
+| `sessionId` | string | auto | Session used by self-test/status; when unset it falls back to env `DSH_SESSION_ID`, then the newest live Agent session |
 | `coreDir` | string | — | Absolute path to `core/` (dynamic import) |
 | `evidenceFile` | string | — | Evidence JSON path for self-test |
 | `stateDir` | string | — | JSONL run-record directory |
@@ -38,7 +38,7 @@ intentional: the adapter cannot fabricate session/tool capabilities.
     probeFile: '<WORKSPACE>/logs/ace-probe.jsonl'
     selfTest: false
     registerTools: true
-    sessionId: '<SESSION_ID>'
+    # sessionId: '<SESSION_ID>'  # optional; resolved automatically when unset
     coreDir: '<WORKSPACE>/core'
     evidenceFile: '<WORKSPACE>/logs/ace-evidence.json'
     stateDir: '<WORKSPACE>/logs/ace-state'

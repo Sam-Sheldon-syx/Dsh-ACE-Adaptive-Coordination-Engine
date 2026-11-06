@@ -15,16 +15,16 @@ It does not write the formal DSH task state during shadow analysis.
 ## Status
 
 - Core algorithms, DSH adapter and read-only `ace_status` tool are implemented.
-- **90/90 tests pass** with `node:test`; no runtime dependencies.
+- **98/98 tests pass** with `node:test`; no runtime dependencies.
 - Real DSH task-state apply/rollback and Mode L live shadow are **not implemented**.
 - The semi-synthetic replay experiment **does not** demonstrate real-task quality
   or performance improvements.
-- Tested only on Windows with DSH 0.2.1-rc.2 and Node.js 24.21.0/24.22.1.
+- Tested on Windows with DSH 0.2.1-rc.2 / 0.2.2-rc.1 and Node.js 24.21.0/24.22.1.
 
 ## Requirements
 
 - Node.js >= 24.21.0
-- DSH 0.2.1-rc.2 (Windows desktop; other platforms/versions untested)
+- DSH 0.2.1-rc.2 / 0.2.2-rc.1 (Windows desktop; other platforms/versions untested)
 - No npm dependencies
 
 ## Quick start
@@ -34,15 +34,19 @@ npm test
 npm run check
 ```
 
-Plugin installation (isolated DSH profile only; do not use the desktop profile):
+Plugin installation (an isolated DSH profile is the safest starting point; a live
+profile such as `desktop` affects every session in it):
 
 1. Copy `ace-plugin/` into `<DSH_HOME>/profiles/<PROFILE>/node_modules/ace-plugin`.
 2. Add `ace-plugin` to `dsh.profile.bundles`.
 3. Provide a patch overlay (see `docs/CONFIGURATION.md`).
 4. Run a boot smoke test: `<DSH_INSTALL>/dsh.cmd --profile <PROFILE> --patch <PATCH_FILE> --help` (`--help` only prints help; a real web/CLI boot is needed to load the plugin).
 
-The `plugin_manager` install path is not verified by this project; the copy
-method above is the one used in the project's isolated-profile checks.
+Alternatively, install through the official `plugin_manager`: `npm pack` the
+bundle, then call `install_bundle` with the tarball's absolute path, and add the
+same config entry to the profile's `cordis.patch.yml`. This path is verified
+against a live profile. Roll back with `remove_bundle` (`ace-plugin`) and by
+removing the config entry. See [docs/INSTALLATION.md](docs/INSTALLATION.md).
 
 ## Documentation
 

@@ -18,7 +18,7 @@ See [../docs/CONFIGURATION.md](../docs/CONFIGURATION.md). Minimal:
   config:
     registerTools: true
     coreDir: '<WORKSPACE>/core'
-    sessionId: '<SESSION_ID>'
+    # sessionId: '<SESSION_ID>'   # optional; resolved automatically when unset
 ```
 
 `selfTest` and `registerTools` require `coreDir`. The plugin declares required
@@ -30,4 +30,4 @@ host services and will not activate if they are unavailable.
 - Does not write session events.
 - `ace_status` is read-only.
 - Real task-state apply/rollback is not implemented in this research prototype.
-- Only Windows + DSH 0.2.1-rc.2 tested.
+- Only Windows + DSH 0.2.1-rc.2 / 0.2.2-rc.1 tested.

@@ -14,7 +14,7 @@ import { pathToFileURL } from 'node:url'
 import { registerAceTools } from './adapter/tools.js'
 
 export const name = 'ace-plugin'
-export const version = '0.3.0-p7'
+export const version = '0.3.3-p7'
 export const inject = ['tools', 'sessions', 'sessionPersistence', 'agents', 'sessionProjections']
 
 const PLUGIN = 'ace-plugin'

@@ -6,7 +6,7 @@
 
 ## Validation
 
-- [ ] `npm test` passes (90 tests)
+- [ ] `npm test` passes (98 tests)
 - [ ] `npm run check` passes
 - [ ] No credentials, session exports, local paths or personal data added
 - [ ] Public package boundary unchanged (or documented)
