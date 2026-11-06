@@ -13,11 +13,11 @@
 ## 1. Get the source
 
 ```bash
-git clone https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine.git
+git clone https://github.com/Sam-Sheldon-syx/Dsh-ACE-Adaptive-Coordination-Engine.git
 cd ACE-Adaptive-Coordination-Engine
 ```
 
-If the repository is downloaded as an archive, use the extracted directory. The public repository is at `https://github.com/Sam-Sheldon-syx/ACE-Adaptive-Coordination-Engine`.
+If the repository is downloaded as an archive, use the extracted directory. The public repository is at `https://github.com/Sam-Sheldon-syx/Dsh-ACE-Adaptive-Coordination-Engine`.
 
 ## 2. Run tests and checks (no DSH needed)
 

@@ -28,6 +28,8 @@ The project is experimental; version numbers are pre-release identifiers.
 - Docs: `sessionId` is documented as optional and auto-resolved; supported DSH
   versions now list 0.2.1-rc.2 and 0.2.2-rc.1; the installation guide documents
   the verified `plugin_manager` path and its rollback.
+- Repository references move to the renamed GitHub location
+  (`Dsh-ACE-Adaptive-Coordination-Engine`); the former URL redirects.
 
 ## Publication metadata remediation — 2026-11-02
 
